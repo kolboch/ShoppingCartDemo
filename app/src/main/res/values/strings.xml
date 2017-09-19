@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Cart</string>
+    <string name="priceSum">Total sum:</string>
+    <string name="promo2for3cola">2 for 3 cola drinks</string>
+    <string name="loyaltyCard">I have loyalty card ( 10% off)</string>
+    <string name="differentProductsDiscount">Buy 3 different products get 10$ off</string>
+</resources>
