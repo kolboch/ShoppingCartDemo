@@ -10,6 +10,7 @@ import org.junit.Test
 
 const private val FIXED_NAME = "Mushroom"
 const private val FIXED_PRICE = 1
+const private val COKE_PRICE = 3
 
 class OrderTest {
 
@@ -19,7 +20,7 @@ class OrderTest {
     fun setUp() {
         myOrder = Order()
         myOrder.productsMap.putAll(mapOf(
-                Product(DataGenerator.COCA_COLA, 3) to 3,
+                Product(DataGenerator.COCA_COLA, COKE_PRICE) to 3,
                 Product("Tomato", 10) to 6,
                 Product(FIXED_NAME, FIXED_PRICE) to 1
         ))
@@ -39,8 +40,36 @@ class OrderTest {
     }
 
     @Test
-    fun sumUpOrder() {
+    fun sumWithNoDiscounts() {
+        // removing one item twice to decrease different item numbers to 2 then on discount
+        myOrder.removeFromOrder(Product(FIXED_NAME, FIXED_PRICE))
+        myOrder.removeFromOrder(Product(FIXED_NAME, FIXED_PRICE))
 
+        assertEquals(69.toDouble(), myOrder.sumUpOrder(), 0.0)
+    }
+
+    @Test
+    fun sumWithDifferentProductsDiscount() {
+        assertEquals(70.0 - 70.0 * myOrder.DIFFERENT_PRODUCTS_DISCOUNT / 100, myOrder.sumUpOrder(), 0.0)
+    }
+
+    @Test
+    fun sumWithCokeDiscount() {
+        // removing one item to decrease different item numbers to 2 then no products discount
+        myOrder.removeFromOrder(Product(FIXED_NAME, FIXED_PRICE))
+        myOrder.removeFromOrder(Product(FIXED_NAME, FIXED_PRICE))
+
+        myOrder.setColaPromotionOn()
+        assertEquals(69.0 - COKE_PRICE, myOrder.sumUpOrder(), 0.0)
+    }
+
+    @Test
+    fun sumWithLoyaltyCard() {
+        // removing one item to decrease different item numbers to 2 then no products discount
+        myOrder.removeFromOrder(Product(FIXED_NAME, FIXED_PRICE))
+        myOrder.removeFromOrder(Product(FIXED_NAME, FIXED_PRICE))
+        myOrder.setLoyaltyMemberCardOn()
+        assertEquals(69.0 - 69.0 * myOrder.LOYALTY_DISCOUNT / 100, myOrder.sumUpOrder(), 0.0)
     }
 
 }

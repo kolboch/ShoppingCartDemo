@@ -13,8 +13,11 @@ class Order {
     private var twoForThreeCola: Boolean = false
     private var loyaltyCardPresent: Boolean = false
 
-    private val LOYALTY_DISCOUNT = 10.0
-    private val DIFFERENT_PRODUCTS_DISCOUNT = 10.0
+    @VisibleForTesting
+    val LOYALTY_DISCOUNT = 10.0
+
+    @VisibleForTesting
+    val DIFFERENT_PRODUCTS_DISCOUNT = 10.0
 
     fun addToOrder(product: Product) {
         if (product in productsMap) {
